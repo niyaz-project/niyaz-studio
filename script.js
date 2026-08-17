@@ -1,0 +1,10 @@
+const progress=document.querySelector('.progress span');
+const nav=document.querySelector('.nav');
+const menu=document.querySelector('.menu-btn');
+const links=document.querySelector('.nav-links');
+window.addEventListener('scroll',()=>{const d=document.documentElement; const p=d.scrollTop/(d.scrollHeight-d.clientHeight); progress.style.width=(p*100)+'%'; nav.style.background=window.scrollY>24?'rgba(7,7,7,.92)':'rgba(7,7,7,.76)'},{passive:true});
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('is-visible')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+menu?.addEventListener('click',()=>{document.body.classList.toggle('menu-open'); if(document.body.classList.contains('menu-open')){links.style.display='flex';links.style.position='absolute';links.style.top='66px';links.style.left='0';links.style.right='0';links.style.padding='24px';links.style.flexDirection='column';links.style.background='rgba(7,7,7,.96)';links.style.borderBottom='1px solid rgba(255,255,255,.1)'}else{links.removeAttribute('style')}});
+const form=document.getElementById('briefForm');
+form?.addEventListener('submit',e=>{e.preventDefault();const data=new FormData(form);const subject=encodeURIComponent('Брифинг — NIYAZ Studio — '+data.get('name'));const body=encodeURIComponent(`Имя: ${data.get('name')}\nКонтакт: ${data.get('contact')}\n\nЧто создаёт клиент:\n${data.get('idea')}`);window.location.href=`mailto:hello@niyaz.studio?subject=${subject}&body=${body}`});
